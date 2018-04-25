@@ -1,0 +1,9 @@
+source_path: "E:/filetest"
+target_path: "F:/filetest"
+servers:
+  - server: 192.168.8.188
+    port: 9981
+  - server: 192.168.8.189
+    port: 9981
+  - server: 192.168.8.190
+    port: 9981
