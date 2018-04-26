@@ -13,4 +13,10 @@ func main() {
 	}
 	fmt.Println(config.Get("source_path"))
 	fmt.Println(config.Get("target_path"))
+	newNode,err:=yaml.Child(config.Root,"servers")
+	if err !=nil{
+		fmt.Println(err)
+	}
+	fmt.Printf("%+v",newNode)
+
 }
