@@ -1,4 +1,4 @@
-package main;
+package qys_gofs_test;
 
 import (
 	"github.com/fsnotify/fsnotify"
