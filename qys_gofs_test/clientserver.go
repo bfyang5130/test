@@ -1,4 +1,4 @@
-package qys_gofs_test
+package main
 
 import (
 "os"

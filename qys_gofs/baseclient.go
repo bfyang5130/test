@@ -9,6 +9,7 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"path/filepath"
 	"crypto/md5"
+	"github.com/google/gops/goprocess"
 )
 
 /**
@@ -31,15 +32,22 @@ type sysFileInfo struct {
 }
 
 func main() {
-
+	//检查当前进程是否已经在进行中...
+	processName := "baseclient"
+	isRunning := CheckRunningProcess(processName)
+	if isRunning {
+		fmt.Printf("%s进程已经在运行!",processName)
+		return
+	}
 	address := `127.0.0.1:60010`
 	//开始连接服务器
 	fmt.Printf("开始创建TCP连接,连接到：%s\n", address)
 	conn, err := net.Dial("tcp", address)
-	defer conn.Close()
 	if err != nil {
 		fmt.Printf("连接失败:%s\n", err.Error())
+		return
 	}
+	defer conn.Close()
 	fmt.Println("连接成功")
 	fmt.Println("开始传送数据...")
 	//开始监控文件
@@ -56,6 +64,26 @@ func main() {
 	//newFile:=Read1()
 	//读取文件里的东西
 	//conn.Write(newFile)
+}
+func CheckRunningProcess(processName string) bool {
+	p := goprocess.FindAll()
+	if p == nil {
+		fmt.Println("检查不到运行中的进程")
+		return true
+	}
+
+	for _, v := range p {
+		v_pN := v.Exec
+		if (len(v_pN) < 4) {
+			continue
+		}
+
+		cut_v_pN := v_pN[0: len(v_pN)-4]
+		if (cut_v_pN == processName) {
+			return true
+		}
+	}
+	return false
 }
 
 func Read1() []byte {
@@ -81,7 +109,10 @@ func Read1() []byte {
 	}
 	return chunks
 }
-
+//向连接里写数据
+func WriteToCoon(b []byte,coon net.Conn) bool{
+	return false
+}
 //监控目录
 func (w *Watch) watchDir(dir string, conn net.Conn) {
 
@@ -134,25 +165,19 @@ func (w *Watch) watchDir(dir string, conn net.Conn) {
 					}
 					if ev.Op&fsnotify.Remove == fsnotify.Remove {
 						fmt.Println("删除文件 : ", ev.Name);
+						stringDelete := fmt.Sprintf("删除文件：%s", ev.Name)
+						conn.Write([]byte(stringDelete))
 						//如果删除文件是目录，则移除监控
 						fi, err := os.Stat(ev.Name);
-						if err != nil {
-							stringDelete := fmt.Sprintf("删除文件：%s", ev.Name)
-							conn.Write([]byte(stringDelete))
-						}
 						if err == nil && fi.IsDir() {
-							//文件删除后，不能再读取原来的文件，所以直接把文件名传送过去
-							conn.Write([]byte(ev.Name))
 							w.watch.Remove(ev.Name);
 							fmt.Println("删除监控 : ", ev.Name);
 						}
 					}
 					if ev.Op&fsnotify.Rename == fsnotify.Rename {
 						//读取文件信息
-						//fInfo:=getFileInfo( ev.Name)
-						//newName :=fmt.Sprintf( "%s",fInfo.fName)
-						//conn.Write([]byte(newName))
-						//fmt.Println("重命名文件 : ", ev.Name);
+						stringDelete := fmt.Sprintf("重命名：%s", ev.Name)
+						conn.Write([]byte(stringDelete))
 						//如果重命名文件是目录，则移除监控
 						//注意这里无法使用os.Stat来判断是否是目录了
 						//因为重命名后，go已经无法找到原文件来获取信息了
@@ -161,9 +186,8 @@ func (w *Watch) watchDir(dir string, conn net.Conn) {
 					}
 					if ev.Op&fsnotify.Chmod == fsnotify.Chmod {
 						//读取文件信息
-						fInfo := getFileInfo(ev.Name)
-						newName := fmt.Sprintf("%s", fInfo.fName)
-						conn.Write([]byte(newName))
+						stringDelete := fmt.Sprintf("重命名：%s", ev.Name)
+						conn.Write([]byte(stringDelete))
 						fmt.Println("修改权限 : ", ev.Name);
 					}
 				}

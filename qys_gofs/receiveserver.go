@@ -12,6 +12,7 @@ func main(){
 	l,err :=net.Listen("tcp",":60010")
 	if err!=nil{
 		fmt.Printf("TCP端口创建出错:%s\n",err.Error())
+		return
 	}
 //接收连接信息并打印出控制台
    for {
@@ -20,7 +21,7 @@ func main(){
 		 if ne,ok := err.( net.Error );ok && ne.Temporary(){
 			 continue
 		 }
-		 fmt.Println( "network error",err )
+		 fmt.Println( "客户端连接异常",err )
 	 }
 	 go FitCon(c)
    }
