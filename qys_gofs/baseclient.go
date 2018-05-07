@@ -65,6 +65,11 @@ func main() {
 	//读取文件里的东西
 	//conn.Write(newFile)
 }
+//检测TCP连接是否正常
+func CheckTcpConnStatus(tcpAddress string){
+
+}
+
 func CheckRunningProcess(processName string) bool {
 	p := goprocess.FindAll()
 	if p == nil {
