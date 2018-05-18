@@ -1,14 +1,14 @@
-package main
+package syfiletoserver
 
 import (
-	"net"
-	"fmt"
-	"os"
-	"io"
-	"time"
 	"github.com/fsnotify/fsnotify"
-	"path/filepath"
+	"time"
+	"os"
+	"fmt"
 	"crypto/md5"
+	"io"
+	"net"
+	"path/filepath"
 )
 
 /**
@@ -28,34 +28,6 @@ type sysFileInfo struct {
 	fPerm  os.FileMode
 	fMd5   string
 	fType  bool
-}
-
-func main() {
-
-	address := `127.0.0.1:60010`
-	//开始连接服务器
-	fmt.Printf("开始创建TCP连接,连接到：%s\n", address)
-	conn, err := net.Dial("tcp", address)
-	defer conn.Close()
-	if err != nil {
-		fmt.Printf("连接失败:%s\n", err.Error())
-	}
-	fmt.Println("连接成功")
-	fmt.Println("开始传送数据...")
-	//开始监控文件
-	//-------------监控开始-----------------
-
-	watch, _ := fsnotify.NewWatcher()
-	w := Watch{
-		watch: watch,
-	}
-	w.watchDir("E:/filetest", conn);
-	select {};
-	//-----------监控结束--------
-
-	//newFile:=Read1()
-	//读取文件里的东西
-	//conn.Write(newFile)
 }
 
 func Read1() []byte {

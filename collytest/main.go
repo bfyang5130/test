@@ -1,20 +1,12 @@
 package main
 
-import (
-	//"fmt"
-
-	//"github.com/gocolly/colly"
-	"github.com/PuerkitoBio/goquery"
-	"fmt"
-)
-
 func main() {
 	// Load the HTML document
-	doc, err := goquery.NewDocumentFromReader(res.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("%#v", doc)
+	//doc, err := goquery.NewDocumentFromReader(res.Body)
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	//fmt.Printf("%#v", doc)
 	//c := colly.NewCollector(colly.AllowedDomains("huanqiu.com"))
      //   fmt.Println("i am here")
 	//c.OnHTML("a[href]", func(e *colly.HTMLElement) {
