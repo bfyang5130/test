@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"crypto/md5"
 	"io"
+	"net"
 	"path/filepath"
 )
 
@@ -54,7 +55,7 @@ func Read1() []byte {
 }
 
 //监控目录
-func (w *Watch) WatchDir(dir string,reCon []SerConfig) {
+func (w *Watch) WatchDir(dir string, conn net.Conn) {
 
 	//通过Walk来遍历目录下的所有子目录
 	filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
@@ -85,15 +86,14 @@ func (w *Watch) WatchDir(dir string,reCon []SerConfig) {
 						//读取文件信息
 						//fInfo := getFileInfo(ev.Name)
 						newName := fmt.Sprintf("源站创建了新文件：%s", ev.Name)
-						SyFileToServer("c",newName,reCon)
-						//conn.Write([]byte(newName))
+						conn.Write([]byte(newName))
 						if err == nil && fi.IsDir() {
 							w.watch.Add(ev.Name);
 							fmt.Println("添加监控 : ", ev.Name);
 							//读取文件信息
 							//fInfo := getFileInfo(ev.Name)
 							newName := fmt.Sprintf("源站创建了新文件：%s", ev.Name)
-							SyFileToServer("c",newName,reCon)
+							conn.Write([]byte(newName))
 						}
 
 					}
@@ -102,7 +102,7 @@ func (w *Watch) WatchDir(dir string,reCon []SerConfig) {
 						//读取文件信息
 						fInfo := getFileInfo(ev.Name)
 						newName := fmt.Sprintf("源站写入了文件：%s", fInfo.fName)
-						SyFileToServer("w",newName,reCon)
+						conn.Write([]byte(newName))
 					}
 					if ev.Op&fsnotify.Remove == fsnotify.Remove {
 						fmt.Println("删除文件 : ", ev.Name);
@@ -110,11 +110,11 @@ func (w *Watch) WatchDir(dir string,reCon []SerConfig) {
 						fi, err := os.Stat(ev.Name);
 						if err != nil {
 							stringDelete := fmt.Sprintf("删除文件：%s", ev.Name)
-							SyFileToServer("d",stringDelete,reCon)
+							conn.Write([]byte(stringDelete))
 						}
 						if err == nil && fi.IsDir() {
 							//文件删除后，不能再读取原来的文件，所以直接把文件名传送过去
-							SyFileToServer("d",ev.Name,reCon)
+							conn.Write([]byte(ev.Name))
 							w.watch.Remove(ev.Name);
 							fmt.Println("删除监控 : ", ev.Name);
 						}
@@ -135,7 +135,7 @@ func (w *Watch) WatchDir(dir string,reCon []SerConfig) {
 						//读取文件信息
 						fInfo := getFileInfo(ev.Name)
 						newName := fmt.Sprintf("%s", fInfo.fName)
-						SyFileToServer("m",newName,reCon)
+						conn.Write([]byte(newName))
 						fmt.Println("修改权限 : ", ev.Name);
 					}
 				}
