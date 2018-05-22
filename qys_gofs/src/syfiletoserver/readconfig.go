@@ -1,14 +1,14 @@
-package main
+package syfiletoserver
 
 import (
-	"fmt"
-
 	"github.com/kylelemons/go-gypsy/yaml"
+	"fmt"
 )
 
-func main() {
+func Readconfig(){
+
 	//读取配置文件
-	config, err := yaml.ReadFile("config.yaml")
+	config, err := yaml.ReadFile("../config.yaml")
 	if err != nil {
 		fmt.Println(err)
 	}
