@@ -48,6 +48,12 @@ func Readconfig() (strErr error,reCon []SerConfig){
 		newPort:=fmt.Sprintf("%s",v1["port"])
 		newSerConfig:=SerConfig{newServer,newPort}
 		reCon=append(reCon,newSerConfig)
+		//生成记录配置文件
+		newFileName:=fmt.Sprintf("%s%s",newServer,newPort)
+		err:=CreateLogFile(newFileName)
+		if err!=nil{
+			fmt.Println(fmt.Sprintf("从机：%s无法创建，无法同步文件"))
+		}
 	}
 	return nil,reCon
 }

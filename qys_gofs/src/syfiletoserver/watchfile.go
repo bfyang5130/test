@@ -14,7 +14,7 @@ import (
  * 文件监控
  */
 type Watch struct {
-	watch *fsnotify.Watcher;
+	Swatch *fsnotify.Watcher;
 }
 
 /**
@@ -65,7 +65,7 @@ func (w *Watch) WatchDir(dir string,reCon []SerConfig) {
 			if err != nil {
 				return err;
 			}
-			err = w.watch.Add(path);
+			err = w.Swatch.Add(path);
 			if err != nil {
 				return err;
 			}
@@ -76,46 +76,47 @@ func (w *Watch) WatchDir(dir string,reCon []SerConfig) {
 	go func() {
 		for {
 			select {
-			case ev := <-w.watch.Events:
+			case ev := <-w.Swatch.Events:
 				{
 					if ev.Op&fsnotify.Create == fsnotify.Create {
 						fmt.Println("创建文件 : ", ev.Name);
 						//这里获取新创建文件的信息，如果是目录，则加入监控中
 						fi, err := os.Stat(ev.Name);
-						//读取文件信息
-						//fInfo := getFileInfo(ev.Name)
-						newName := fmt.Sprintf("源站创建了新文件：%s", ev.Name)
-						SyFileToServer("c",newName,reCon)
+
 						//conn.Write([]byte(newName))
 						if err == nil && fi.IsDir() {
-							w.watch.Add(ev.Name);
+							w.Swatch.Add(ev.Name);
 							fmt.Println("添加监控 : ", ev.Name);
 							//读取文件信息
 							//fInfo := getFileInfo(ev.Name)
-							newName := fmt.Sprintf("源站创建了新文件：%s", ev.Name)
-							SyFileToServer("c",newName,reCon)
+							fmt.Printf("源站创建了新目录：%s\n", ev.Name)
+							WriteOpLogFile("c",ev.Name,reCon)
+						}else if err==nil{
+							//读取文件信息
+							//fInfo := getFileInfo(ev.Name)
+							fmt.Printf("源站创建了新文件：%s\n", ev.Name)
+							WriteOpLogFile("c",ev.Name,reCon)
 						}
 
 					}
 					if ev.Op&fsnotify.Write == fsnotify.Write {
 						fmt.Println("写入文件 : ", ev.Name);
 						//读取文件信息
-						fInfo := getFileInfo(ev.Name)
-						newName := fmt.Sprintf("源站写入了文件：%s", fInfo.fName)
-						SyFileToServer("w",newName,reCon)
+						fmt.Printf("源站写入了文件：%s\n", ev.Name)
+						WriteOpLogFile("w",ev.Name,reCon)
 					}
 					if ev.Op&fsnotify.Remove == fsnotify.Remove {
 						fmt.Println("删除文件 : ", ev.Name);
 						//如果删除文件是目录，则移除监控
 						fi, err := os.Stat(ev.Name);
 						if err != nil {
-							stringDelete := fmt.Sprintf("删除文件：%s", ev.Name)
-							SyFileToServer("d",stringDelete,reCon)
+							fmt.Printf("删除文件：%s\n", ev.Name)
+							WriteOpLogFile("d",ev.Name,reCon)
 						}
 						if err == nil && fi.IsDir() {
 							//文件删除后，不能再读取原来的文件，所以直接把文件名传送过去
-							SyFileToServer("d",ev.Name,reCon)
-							w.watch.Remove(ev.Name);
+							WriteOpLogFile("d",ev.Name,reCon)
+							w.Swatch.Remove(ev.Name);
 							fmt.Println("删除监控 : ", ev.Name);
 						}
 					}
@@ -129,17 +130,17 @@ func (w *Watch) WatchDir(dir string,reCon []SerConfig) {
 						//注意这里无法使用os.Stat来判断是否是目录了
 						//因为重命名后，go已经无法找到原文件来获取信息了
 						//所以这里就简单粗爆的直接remove好了
-						w.watch.Remove(ev.Name);
+						w.Swatch.Remove(ev.Name);
 					}
 					if ev.Op&fsnotify.Chmod == fsnotify.Chmod {
 						//读取文件信息
 						fInfo := getFileInfo(ev.Name)
 						newName := fmt.Sprintf("%s", fInfo.fName)
-						SyFileToServer("m",newName,reCon)
+						WriteOpLogFile("m",newName,reCon)
 						fmt.Println("修改权限 : ", ev.Name);
 					}
 				}
-			case err := <-w.watch.Errors:
+			case err := <-w.Swatch.Errors:
 				{
 					fmt.Println("error : ", err);
 					return;

@@ -13,6 +13,12 @@ func main() {
 		fmt.Println(err)
 		return
 	}
+	//创建发送记操作日志
+	err=syfiletoserver.CreateLogFile("main.bin")
+	if err!=nil{
+		fmt.Println("主同步日志无法创建，程序无法运行")
+		return
+	}
 	//开始监控文件
 	//-------------监控开始-----------------
 
