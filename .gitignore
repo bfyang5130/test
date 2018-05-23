@@ -1,9 +1,6 @@
 #golangidea
-.idea/
-.idea/workspace.xml
-qys_gofs/src/log
-#golangidea
 .idea
+qys_gofs/src/log
 # yii console command
 
 # phpstorm project files

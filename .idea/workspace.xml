@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9a3659e9-6379-437b-a199-5bb5e53e6e67" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/qys_gofs/src/syfiletoserver/createlogfile.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/qys_gofs/src/syfiletoserver/singletcp.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/qys_gofs/src/syfiletoserver/writeoplogtofile.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/send/src/main/sendclient.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qys_gofs/src/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/qys_gofs/src/config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qys_gofs/src/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/qys_gofs/src/main/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qys_gofs/src/receiveserver.go" beforeDir="false" afterPath="$PROJECT_DIR$/receive/src/main/receiveserver.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qys_gofs/src/syfiletoserver/readconfig.go" beforeDir="false" afterPath="$PROJECT_DIR$/qys_gofs/src/syfiletoserver/readconfig.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qys_gofs/src/syfiletoserver/syfiletoserver.go" beforeDir="false" afterPath="$PROJECT_DIR$/qys_gofs/src/syfiletoserver/syfiletoserver.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qys_gofs/src/syfiletoserver/watchfile.go" beforeDir="false" afterPath="$PROJECT_DIR$/qys_gofs/src/syfiletoserver/watchfile.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,7 +13,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="syfiletoserver.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="syfiletoserver.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/qys_gofs/src/syfiletoserver/syfiletoserver.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="299">
@@ -36,14 +25,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="receiveserver.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/receive/src/main/receiveserver.go">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="475">
-              <caret line="25" column="14" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="14" />
-              <folding>
-                <element signature="e#13#43#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="38">
+              <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -160,7 +146,6 @@
         <option value="$PROJECT_DIR$/qys_gofs/src/log/createlogfile.go" />
         <option value="$PROJECT_DIR$/qys_gofs/src/main/main.go" />
         <option value="$PROJECT_DIR$/qys_gofs/src/syfiletoserver/createlogfile.go" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/qys_gofs/src/syfiletoserver/writeoplogtofile.go" />
         <option value="$PROJECT_DIR$/qys_gofs/src/syfiletoserver/readconfig.go" />
         <option value="$PROJECT_DIR$/qys_gofs/src/config.yaml" />
@@ -169,6 +154,7 @@
         <option value="$PROJECT_DIR$/send/src/main/sendclient.go" />
         <option value="$PROJECT_DIR$/qys_gofs/src/syfiletoserver/watchfile.go" />
         <option value="$PROJECT_DIR$/qys_gofs/src/syfiletoserver/syfiletoserver.go" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -202,59 +188,6 @@
             <path>
               <item name="test" type="b2602c69:ProjectViewProjectNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="test" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="basetest" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="test" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="collytest" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="test" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="qys_gofs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="test" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="qys_gofs" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="test" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="qys_gofs" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="back" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="test" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="qys_gofs" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="syfiletoserver" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="test" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="send" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="test" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="send" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="test" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="send" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -298,8 +231,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="366" y="27" width="1400" height="1000" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27761194" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27761194" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50820893" side_tool="true" visible="true" weight="0.41935483" />
       <window_info anchor="right" id="Database" order="3" />
@@ -308,7 +242,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4977612" weight="0.33870968" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.49179104" visible="true" weight="0.41935483" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49179104" visible="true" weight="0.41935483" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -554,13 +488,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/soft/Go/src/github.com/satori/go.uuid/uuid.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2888">
@@ -704,6 +631,13 @@
           <folding>
             <element signature="e#24#41#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
         </state>
       </provider>
     </entry>
