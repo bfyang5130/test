@@ -79,10 +79,8 @@ func (w *Watch) WatchDir(dir string,reCon []SerConfig) {
 			case ev := <-w.Swatch.Events:
 				{
 					if ev.Op&fsnotify.Create == fsnotify.Create {
-						fmt.Println("创建文件 : ", ev.Name);
 						//这里获取新创建文件的信息，如果是目录，则加入监控中
 						fi, err := os.Stat(ev.Name);
-
 						//conn.Write([]byte(newName))
 						if err == nil && fi.IsDir() {
 							w.Swatch.Add(ev.Name);
@@ -90,7 +88,7 @@ func (w *Watch) WatchDir(dir string,reCon []SerConfig) {
 							//读取文件信息
 							//fInfo := getFileInfo(ev.Name)
 							fmt.Printf("源站创建了新目录：%s\n", ev.Name)
-							WriteOpLogFile("c",ev.Name,reCon)
+							WriteOpLogFile("C",ev.Name,reCon)
 						}else if err==nil{
 							//读取文件信息
 							//fInfo := getFileInfo(ev.Name)
@@ -115,7 +113,7 @@ func (w *Watch) WatchDir(dir string,reCon []SerConfig) {
 						}
 						if err == nil && fi.IsDir() {
 							//文件删除后，不能再读取原来的文件，所以直接把文件名传送过去
-							WriteOpLogFile("d",ev.Name,reCon)
+							WriteOpLogFile("D",ev.Name,reCon)
 							w.Swatch.Remove(ev.Name);
 							fmt.Println("删除监控 : ", ev.Name);
 						}
@@ -130,6 +128,8 @@ func (w *Watch) WatchDir(dir string,reCon []SerConfig) {
 						//注意这里无法使用os.Stat来判断是否是目录了
 						//因为重命名后，go已经无法找到原文件来获取信息了
 						//所以这里就简单粗爆的直接remove好了
+						fmt.Println("重命令 : ", ev.Name);
+						WriteOpLogFile("r",ev.Name,reCon)
 						w.Swatch.Remove(ev.Name);
 					}
 					if ev.Op&fsnotify.Chmod == fsnotify.Chmod {

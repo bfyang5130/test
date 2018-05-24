@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	netListen, err := net.Listen("tcp", "127.0.0.1:60020")
+	netListen, err := net.Listen("tcp", ":9988")
 	CheckError(err)
 
 	defer netListen.Close()
