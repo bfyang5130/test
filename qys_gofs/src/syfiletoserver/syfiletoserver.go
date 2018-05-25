@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-func SyFileToServer(opType string,filePath string,serverPort string)(error){
+func SyFileToServer(opType string,filePath string,newPath string,serverPort string)(error){
 	//获得连接
 	//开始连接服务器
 	fmt.Println(fmt.Sprintf("开始创建TCP连接,连接到：%s", serverPort))
@@ -19,7 +19,7 @@ func SyFileToServer(opType string,filePath string,serverPort string)(error){
 	}
 	defer conn.Close()
 	   //进行封包操作传递命令
-	   conn.Write(protocol.Packet([]byte(fmt.Sprintf("%s/%s",opType,filePath))))
+	   conn.Write(protocol.Packet([]byte(fmt.Sprintf("qyssyfile///%s/%s",opType,newPath))))
 	   //对新建文件写入文件，修改文件进行文件传输处理
 	   switch opType{
 	   case "c":
@@ -45,7 +45,6 @@ func readBufio(path string,conn net.Conn) {
 
 	bufReader := bufio.NewReader(file)
 	buf := make([]byte, 1024)
-
 	for {
 		readNum, err := bufReader.Read(buf)
 		if err != nil && err != io.EOF {

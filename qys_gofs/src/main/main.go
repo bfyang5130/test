@@ -8,7 +8,8 @@ import (
 
 func main() {
 	//获取配置文件
-	err,reCon:=syfiletoserver.Readconfig()
+	err,sourcePath,reCon:=syfiletoserver.Readconfig()
+	sourcePath=fmt.Sprintf("%s",sourcePath)
 	if err!=nil{
 		fmt.Println(err)
 		return
@@ -26,6 +27,7 @@ func main() {
 	w := syfiletoserver.Watch{
 		watch,
 	}
-	w.WatchDir("E:/filetest",reCon);
+	fmt.Println(sourcePath)
+	w.WatchDir(sourcePath,reCon);
 	select {};
 }

@@ -1,7 +1,4 @@
-source_path: "E:/filetest"
-target_path: "F:/filetest"
+source_path: E:/filetest
 servers:
   - server: 127.0.0.1
     port: 60010
-  - server: 127.0.0.1
-    port: 60020
