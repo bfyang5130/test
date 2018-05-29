@@ -51,8 +51,10 @@ func readBufio(path string,conn net.Conn) {
 			fmt.Println("无法读取文件")
 		}
 		if 0 == readNum {
+			//读取文件结尾标志
 			break
 		}
+		//这里增加一个文件目的，才能知道这传输的内容是到那个文件
 		conn.Write(protocol.Packet(buf[:readNum]))
 	}
 }
