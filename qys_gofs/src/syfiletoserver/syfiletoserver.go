@@ -26,7 +26,7 @@ func SyFileToServer(opType string,filePath string,newPath string,serverPort stri
 		   //readBufio(filePath,conn)
 	       break;
 	   case "w":
-		   readBufio(filePath,conn)
+		   readBufio(filePath,newPath,conn)
 	       break;
 	   default:
 		   fmt.Println("iamhere3")
@@ -35,7 +35,7 @@ func SyFileToServer(opType string,filePath string,newPath string,serverPort stri
 	   return fmt.Errorf("传输失败")
 }
 //读取并写入
-func readBufio(path string,conn net.Conn) {
+func readBufio(path string,newPath string,conn net.Conn) {
 	file, err := os.Open(path)
 	if err != nil {
 		fmt.Println("无法打开目录")
@@ -45,6 +45,18 @@ func readBufio(path string,conn net.Conn) {
 
 	bufReader := bufio.NewReader(file)
 	buf := make([]byte, 1024)
+	////////////////////////////////////////////////////////////
+
+	fl, err := os.OpenFile("E:/index.html", os.O_APPEND|os.O_CREATE, 0644)
+	if err != nil {
+		return
+	}
+	defer fl.Close()
+
+	/////////////////////////////////////////////////////////////
+
+	//处理新路径配置
+	splitPath:=fmt.Sprintf("qystofile///%sqyspath///",newPath)
 	for {
 		readNum, err := bufReader.Read(buf)
 		if err != nil && err != io.EOF {
@@ -55,6 +67,11 @@ func readBufio(path string,conn net.Conn) {
 			break
 		}
 		//这里增加一个文件目的，才能知道这传输的内容是到那个文件
-		conn.Write(protocol.Packet(buf[:readNum]))
+		n, err1 := fl.Write(append([]byte(splitPath),buf[:readNum]...))
+		if err1 == nil && n < len(append([]byte(splitPath),buf[:readNum]...)) {
+
+		}
+		conn.Write(protocol.Packet(append([]byte(splitPath),buf[:readNum]...)))
+
 	}
 }

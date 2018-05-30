@@ -85,7 +85,7 @@ func reader(readerChannel chan []byte,targetPath string,fileList *list.List) {
 				}
 			}else {
 				//写入文件
-				protocol.WriteToFile(data,fileList)
+				protocol.WriteToFile(data,targetPath)
 			}
 
 		}
