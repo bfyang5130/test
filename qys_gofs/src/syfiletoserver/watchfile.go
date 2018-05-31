@@ -80,6 +80,7 @@ func (w *Watch) WatchDir(dir string,reCon []SerConfig) {
 				{
 					if ev.Op&fsnotify.Create == fsnotify.Create {
 						//这里获取新创建文件的信息，如果是目录，则加入监控中
+						fmt.Println("创建",ev.Name)
 						fi, err := os.Stat(ev.Name);
 						//conn.Write([]byte(newName))
 						if err == nil && fi.IsDir() {

@@ -74,11 +74,11 @@ func reader(readerChannel chan []byte,targetPath string,fileList *list.List) {
 				switch opType {
 				case "c":
 					//创建文件
-					protocol.CreateFile(true,targetPath,opPath,fileList)
+					protocol.CreateFile(true,targetPath,opPath)
 					break
 				case "w":
 					//写入文件
-					protocol.CreateFile(false,targetPath,opPath,fileList)
+					protocol.CreateFile(false,targetPath,opPath)
 					break
 				default:
 					break

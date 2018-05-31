@@ -26,6 +26,7 @@ func SyFileToServer(opType string,filePath string,newPath string,serverPort stri
 		   //readBufio(filePath,conn)
 	       break;
 	   case "w":
+	   	   fmt.Println("i am wrinting here")
 		   readBufio(filePath,newPath,conn)
 	       break;
 	   default:
@@ -46,9 +47,10 @@ func readBufio(path string,newPath string,conn net.Conn) {
 	bufReader := bufio.NewReader(file)
 	buf := make([]byte, 1024)
 	////////////////////////////////////////////////////////////
-
-	fl, err := os.OpenFile("E:/index.html", os.O_APPEND|os.O_CREATE, 0644)
+    fmt.Println("xxxxxxxxxxxxxxxxxxxxx----------------xxxxxxxxxxxxxxxxxxxx")
+	fl, err := os.OpenFile("E:/index.html", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
 	defer fl.Close()
@@ -67,7 +69,10 @@ func readBufio(path string,newPath string,conn net.Conn) {
 			break
 		}
 		//这里增加一个文件目的，才能知道这传输的内容是到那个文件
-		n, err1 := fl.Write(append([]byte(splitPath),buf[:readNum]...))
+		n, err1 := fl.Write(buf[:readNum])
+		if err1!=nil{
+			fmt.Println(err1)
+		}
 		if err1 == nil && n < len(append([]byte(splitPath),buf[:readNum]...)) {
 
 		}
