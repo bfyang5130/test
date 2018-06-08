@@ -27,3 +27,16 @@ func checkFileIsExist(filename string) bool {
 	}
 	return exist
 }
+
+/*
+ *重新检测传输过去的是否正确
+ */
+func ReCheckOpFile(baseFilePath string,opType string,newPath string) (optype string,newpath string) {
+	fileinfo, err := os.Stat(baseFilePath)
+	if err==nil{
+		if fileinfo.IsDir(){
+			return "C",fmt.Sprintf("%s/",newPath)
+		}
+	}
+	return opType,newPath
+}

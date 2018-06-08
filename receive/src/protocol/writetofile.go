@@ -39,7 +39,7 @@ func WriteToFile(buf []byte,targetPath string) {
         theNewTargetPath:=fmt.Sprintf("%s%s",targetPath,theNewPath)
         fmt.Println(theNewTargetPath)
         //打开文件
-		f, err := os.OpenFile(theNewTargetPath, os.O_WRONLY|os.O_APPEND, 0666) //打开文件
+		f, err := os.OpenFile(theNewTargetPath, os.O_CREATE|os.O_WRONLY, 0666) //打开文件
 		if err!=nil{
 			fmt.Println("无法打开要传输的文件")
 			return

@@ -80,15 +80,15 @@ func (w *Watch) WatchDir(dir string,reCon []SerConfig) {
 				{
 					if ev.Op&fsnotify.Create == fsnotify.Create {
 						//这里获取新创建文件的信息，如果是目录，则加入监控中
-						fmt.Println("创建",ev.Name)
 						fi, err := os.Stat(ev.Name);
 						//conn.Write([]byte(newName))
 						if err == nil && fi.IsDir() {
 							w.Swatch.Add(ev.Name);
-							fmt.Println("添加监控 : ", ev.Name);
+							//如果是目录，还要循环目录下面的目录再进行监控
+							
 							//读取文件信息
 							//fInfo := getFileInfo(ev.Name)
-							fmt.Printf("源站创建了新目录：%s\n", ev.Name)
+							fmt.Printf("源站监控/创建/新目录：%s\n", ev.Name)
 							WriteOpLogFile("C",ev.Name,reCon)
 						}else if err==nil{
 							//读取文件信息
@@ -99,24 +99,22 @@ func (w *Watch) WatchDir(dir string,reCon []SerConfig) {
 
 					}
 					if ev.Op&fsnotify.Write == fsnotify.Write {
-						fmt.Println("写入文件 : ", ev.Name);
 						//读取文件信息
 						fmt.Printf("源站写入了文件：%s\n", ev.Name)
 						WriteOpLogFile("w",ev.Name,reCon)
 					}
 					if ev.Op&fsnotify.Remove == fsnotify.Remove {
-						fmt.Println("删除文件 : ", ev.Name);
 						//如果删除文件是目录，则移除监控
 						fi, err := os.Stat(ev.Name);
 						if err != nil {
-							fmt.Printf("删除文件：%s\n", ev.Name)
+							fmt.Printf("源站删除文件：%s\n", ev.Name)
 							WriteOpLogFile("d",ev.Name,reCon)
 						}
 						if err == nil && fi.IsDir() {
 							//文件删除后，不能再读取原来的文件，所以直接把文件名传送过去
 							WriteOpLogFile("D",ev.Name,reCon)
 							w.Swatch.Remove(ev.Name);
-							fmt.Println("删除监控 : ", ev.Name);
+							fmt.Println("源站/删除/监控目录 : ", ev.Name);
 						}
 					}
 					if ev.Op&fsnotify.Rename == fsnotify.Rename {

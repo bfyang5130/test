@@ -11,14 +11,14 @@ import (
 
 func main() {
 	//获取配置文件
-	err,targetPath:=protocol.Readconfig()
-	targetPath=fmt.Sprintf("%s",targetPath)
-	if err!=nil{
+	err, targetPath := protocol.Readconfig()
+	targetPath = fmt.Sprintf("%s", targetPath)
+	if err != nil {
 		fmt.Println("没有配置同步目录")
 		return
 	}
 	//定义一个list来装来处理的文件
-	fileList:=list.New()
+	fileList := list.New()
 	netListen, err := net.Listen("tcp", "127.0.0.1:60010")
 	CheckError(err)
 
@@ -32,17 +32,17 @@ func main() {
 		}
 
 		Log(conn.RemoteAddr().String(), " tcp connect success")
-		go handleConnection(conn,targetPath,fileList)
+		go handleConnection(conn, targetPath, fileList)
 	}
 }
 
-func handleConnection(conn net.Conn,targetPath string,fileList *list.List) {
+func handleConnection(conn net.Conn, targetPath string, fileList *list.List) {
 
 	//声明一个临时缓冲区，用来存储被截断的数据
 	tmpBuffer := make([]byte, 0)
 	//声明一个管道用于接收解包的数据
 	readerChannel := make(chan []byte, 16)
-	go reader(readerChannel,targetPath,fileList)
+	go reader(readerChannel, targetPath, fileList)
 
 	buffer := make([]byte, 1024)
 	for {
@@ -58,34 +58,38 @@ func handleConnection(conn net.Conn,targetPath string,fileList *list.List) {
 		tmpBuffer = protocol.Unpack(append(tmpBuffer, buffer[:n]...), readerChannel)
 	}
 }
-func reader(readerChannel chan []byte,targetPath string,fileList *list.List) {
+func reader(readerChannel chan []byte, targetPath string, fileList *list.List) {
 	for {
 		select {
 		case data := <-readerChannel:
 			//判断是否为命令
-			isString:=string(data)
-			if strings.HasPrefix(isString, "qyssyfile///"){
+			isString := string(data)
+			if strings.HasPrefix(isString, "qyssyfile///") {
 
-				isReplace:=strings.Replace(isString,"qyssyfile///","",1)
+				isReplace := strings.Replace(isString, "qyssyfile///", "", 1)
 				//载掉第一个字符串
-				opType:=isReplace[:1]
-				fmt.Println(fmt.Sprintf("这是一个操作命令:%s",opType))
-				opPath:=isReplace[2:]
+				opType := isReplace[:1]
+				fmt.Println(fmt.Sprintf("这是一个操作命令:%s", opType))
+				opPath := isReplace[2:]
 				switch opType {
 				case "c":
 					//创建文件
-					protocol.CreateFile(true,targetPath,opPath)
+					fmt.Println("我这个是用来做创建文件的，我不创建目录，是不是我在这出错了")
+					protocol.CreateFile(true, targetPath, opPath,fileList)
+					break
+				case "C":
+					protocol.CreateDir(targetPath, opPath,fileList)
 					break
 				case "w":
 					//写入文件
-					protocol.CreateFile(false,targetPath,opPath)
+					protocol.CreateFile(false, targetPath, opPath,fileList)
 					break
 				default:
 					break
 				}
-			}else {
+			} else {
 				//写入文件
-				protocol.WriteToFile(data,targetPath)
+				protocol.WriteToFile(data, targetPath)
 			}
 
 		}
