@@ -1,0 +1,18 @@
+/log
+
+# Mac DS_Store Files
+.DS_Store
+
+# phpunit itself is not needed
+phpunit.phar
+# local phpunit config
+/phpunit.xml
+!/vendor/
+/backend/config
+/backend/bak
+/backend/resource17
+/backend/resource23
+!/backend/config/main.php
+!/backend/config/bootstrap.php
+!/backend/config/params.php
+!/backend/config/
